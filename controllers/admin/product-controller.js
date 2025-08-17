@@ -36,11 +36,19 @@ module.exports.index = async (req, res) => {
       find.status = req.query.status // truy vấn ở url
     }
     
+    let keyword = "";
+    if (req.query.keyword) {
+        keyword = req.query.keyword;
+        const regex = new RegExp(keyword, "i")   // khái niệm tìm kiếm regex trong js
+        find.title = regex;
+    }
+
     const products = await Product.find(find)
     
     res.render("admin/pages/products/index.pug", {
         pageTitle: "Trang danh sách sản phẩm",
         products: products,
-        filterStatus: filterStatus
+        filterStatus: filterStatus,
+        keyword: keyword
     })
 }
