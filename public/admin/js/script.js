@@ -40,6 +40,32 @@ if(formSearch) {
     });
 }
 
+const buttonsPagination = document.querySelectorAll("[button-pagination]") 
+    // thêm [] để lấy thuộc tính tự định nghĩa trong html
+    let url = new URL(window.location.href)
+    if(buttonsPagination) {
+      buttonsPagination.forEach(button => {
+        button.addEventListener("click", () => {
+          const page = button.getAttribute("button-pagination")
+  
+          url.searchParams.set("page", page)
+
+          window.location.href = url.href
+        })
+      })
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
