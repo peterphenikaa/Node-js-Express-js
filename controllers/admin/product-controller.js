@@ -47,3 +47,25 @@ module.exports.index = async (req, res) => {
     })
 }
 
+// [GET] /admin/products/change-status/:status/:id
+module.exports.changeStatus = async (req, res) => {
+  const status = req.params.status
+  const id = req.params.id
+
+  await Product.updateOne({_id: id}, {status: status})
+
+  // Redirect back to current page with all existing query parameters   // res.redirect("/admin/products") là code gốc
+  const currentUrl = new URL(req.headers.referer || "/admin/products")
+  res.redirect(currentUrl.pathname + currentUrl.search)
+  // console.log(url.pathname) // "/admin/products"
+  // console.log(url.search)   // "?page=2"
+}
+
+
+
+
+
+
+
+
+
