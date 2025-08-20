@@ -1,9 +1,9 @@
-// [GET] /admin/products
 const Product = require("../../models/product-model.js")
 const filterStatusHelper = require("../../helpers/filterStatus.js")
 const searchHelper = require("../../helpers/search.js")
 const paginationHelper = require("../../helpers/pagination.js")
 
+// [GET] /admin/products
 module.exports.index = async (req, res) => {
     
     const filterStatus = filterStatusHelper(req.query)
@@ -47,7 +47,7 @@ module.exports.index = async (req, res) => {
     })
 }
 
-// [GET] /admin/products/change-status/:status/:id
+// [PATCH] /admin/products/change-status/:status/:id
 module.exports.changeStatus = async (req, res) => {
   const status = req.params.status
   const id = req.params.id
@@ -61,7 +61,11 @@ module.exports.changeStatus = async (req, res) => {
   // console.log(url.search)   // "?page=2"
 }
 
-
+// [PATCH] /admin/products/change-multi
+module.exports.changeMulti = async (req, res) => {
+  console.log(req.body);
+  res.send("OK");
+};
 
 
 
