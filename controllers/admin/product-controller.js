@@ -63,9 +63,26 @@ module.exports.changeStatus = async (req, res) => {
 
 // [PATCH] /admin/products/change-multi
 module.exports.changeMulti = async (req, res) => {
-  console.log(req.body);
-  res.send("OK");
-};
+  const type = req.body.type
+  const ids = req.body.ids.split(", ") // split(", ") đổi sang dạng mảng 
+
+  switch (type) {
+      case "active":
+          await Product.updateMany({ _id: { $in: ids } }, { status: "active" })
+          // { _id: { $in: ids } }
+          // tìm tất cả ids nằm trong _id để update hàng loạt
+          break
+      case "inactive":
+          await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" })
+          break
+      default:
+          break
+  }
+
+  const currentUrl = new URL(req.headers.referer || "/admin/products")
+  res.redirect(currentUrl.pathname + currentUrl.search)
+}
+
 
 
 
