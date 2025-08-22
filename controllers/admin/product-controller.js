@@ -87,7 +87,11 @@ module.exports.changeMulti = async (req, res) => {
 module.exports.deleteItem = async (req, res) => {
   const id = req.params.id
 
-  await Product.deleteOne({ _id: id })
+  // await Product.deleteOne({ _id: id })
+  await Product.updateOne({ _id: id }, {
+    deleted: true,
+    deletedAt: new Date()
+  })
 
   const currentUrl = new URL(req.headers.referer || "/admin/products")
   res.redirect(currentUrl.pathname + currentUrl.search)
