@@ -74,7 +74,11 @@ module.exports.changeMulti = async (req, res) => {
           break
       case "inactive":
           await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" })
+          // $in = toán tử tìm kiếm - Tự động tìm tất cả document nằm trong mảng ids cho _id trong database 
           break
+      case "delete-all":
+          await Product.updateMany({ _id: { $in: ids } }, { deleted: "true", deletedAt: new Date()})
+          break 
       default:
           break
   }
