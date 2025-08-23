@@ -55,6 +55,8 @@ module.exports.changeStatus = async (req, res) => {
 
   await Product.updateOne({_id: id}, {status: status})
 
+  req.flash("success", "Cập nhật trạng thái thành công!")
+
   // Redirect back to current page with all existing query parameters   // res.redirect("/admin/products") là code gốc
   const currentUrl = new URL(req.headers.referer || "/admin/products")
   res.redirect(currentUrl.pathname + currentUrl.search)
@@ -70,11 +72,13 @@ module.exports.changeMulti = async (req, res) => {
   switch (type) {
       case "active":
           await Product.updateMany({ _id: { $in: ids } }, { status: "active" })
+          req.flash(`success", "Cập nhật trạng thái thành công ${ids.length} sản phẩm!`)
           // { _id: { $in: ids } }
           // tìm tất cả ids nằm trong _id để update hàng loạt
           break
       case "inactive":
           await Product.updateMany({ _id: { $in: ids } }, { status: "inactive" })
+          req.flash(`success", "Cập nhật trạng thái thành công ${ids.length} sản phẩm!`)
           // $in = toán tử tìm kiếm - Tự động tìm tất cả document nằm trong mảng ids cho _id trong database 
           break
       case "delete-all":
