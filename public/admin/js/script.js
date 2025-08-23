@@ -113,9 +113,17 @@ if (formChangeMulti) {
 
             inputsChecked.forEach(input => {
                 const id = input.value // value là giá trị mặc định
-                ids.push(id)
+                if (typeChange == "change-position") {
+                    const position = input
+                        .closest("tr") // chọn phần tử gần nhất
+                        .querySelector("input[name='position']").value
+                
+                    ids.push(`${id}-${position}`)
+                } else {
+                    ids.push(id)
+                }
             })
-
+            
             inputIds.value = ids.join(", ") // join(", ") để chuyển data từ js lấy được sang ô input dưới dạng text, string
 
             formChangeMulti.submit()
